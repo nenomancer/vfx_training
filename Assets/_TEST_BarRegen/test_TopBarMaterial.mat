@@ -55,12 +55,14 @@ Material:
     - _Cull: 0
     - _CurrentHealth: 2633.68
     - _DstBlend: 0
+    - _IsTrailColored: 0
     - _MaxHealth: 5000
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SegmentAmount: 250
     - _SrcBlend: 1
     - _Surface: 0
+    - _TrailEffecTimer: 1
     - _TrailHealth: 3406
     - _ZTest: 4
     - _ZWrite: 1
