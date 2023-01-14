@@ -9,7 +9,7 @@ public class test_HealthScript : MonoBehaviour
 
     [SerializeField] float maxHealth;
     public float MaxHealth => maxHealth;
-    
+
     [SerializeField] float health;
     public float Health => health;
 
