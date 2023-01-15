@@ -26,12 +26,13 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2000
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Opaque
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -51,21 +52,31 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _CastShadows: 1
+    - _Bottom: 1.02
+    - _CastShadows: 0
     - _Cull: 0
-    - _CurrentHealth: 2633.68
     - _DstBlend: 0
-    - _IsTrailColored: 0
-    - _MaxHealth: 5000
+    - _HealthSegmentAmount: 250
+    - _HealthSegmentsPerGroup: 4
+    - _HealthbarCurrentHealth: 947
+    - _HealthbarMaxHealth: 1852
+    - _HighlightBottom: 0.71
+    - _HighlightOpacity: 0.06
+    - _HighlightTop: 1.45
+    - _Opacity: 0.3
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SegmentAmount: 250
     - _SrcBlend: 1
     - _Surface: 0
-    - _TrailEffecTimer: 1
-    - _TrailHealth: 3406
+    - _Top: 1
+    - _TrailEffectTimer: 0
+    - _TrailHealth: 1309
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 1
-    m_Colors: []
+    m_Colors:
+    - _HealthbarPrimaryColor: {r: 0.47450978, g: 0.9058824, b: 0.28627446, a: 1}
+    - _HealthbarSecondaryColor: {r: 0.12941176, g: 0.20784307, b: 0.18431365, a: 0}
+    - _TrailAccentColor: {r: 1, g: 0.0509433, b: 0.0509433, a: 0}
+    - _TrailBaseColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

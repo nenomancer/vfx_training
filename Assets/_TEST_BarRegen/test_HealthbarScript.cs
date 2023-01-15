@@ -33,8 +33,8 @@ public class test_HealthbarScript : MonoBehaviour
         playa = GetComponentInParent<test_HealthScript>();
         material = GetComponentInChildren<Renderer>().material;
 
-        material.SetFloat("_MaxHealth", playa.MaxHealth);
-        material.SetFloat("_CurrentHealth", playa.Health);
+        material.SetFloat("_HealthbarMaxHealth", playa.MaxHealth);
+        material.SetFloat("_HealthbarCurrentHealth", playa.Health);
         material.SetFloat("_TrailHealth", playa.Health);
     }
 
@@ -51,16 +51,14 @@ public class test_HealthbarScript : MonoBehaviour
         {
             fillDelayTimer -= Time.deltaTime;
             material.SetFloat(
-                "_CurrentHealth",
+                "_HealthbarCurrentHealth",
                 Mathf.Lerp(
-                    material.GetFloat("_CurrentHealth"),
+                    material.GetFloat("_HealthbarCurrentHealth"),
                     playa.Health,
                     Time.deltaTime * fillRate
                 )
             );
-            Debug.Log(
-                Mathf.Abs(material.GetFloat("_CurrentHealth") / playa.Health) <= Mathf.Epsilon + 1
-            );
+
         }
         else
         {
@@ -74,7 +72,7 @@ public class test_HealthbarScript : MonoBehaviour
             );
             // trailEffectTimer = Mathf.Sin(Time.deltaTime * 100.0f);
             Debug.Log(trailEffectTimer);
-            trailEffectTimer -= Time.deltaTime * 100.0f;
+            trailEffectTimer -= Time.deltaTime * 10.0f;
         }
     }
 
