@@ -60,9 +60,11 @@ Material:
     - _HealthSegmentsPerGroup: 4
     - _HealthbarCurrentHealth: 947
     - _HealthbarMaxHealth: 1852
-    - _HighlightBottom: 0.71
-    - _HighlightOpacity: 0.06
-    - _HighlightTop: 1.45
+    - _HighlightBlurBottom: 0.41
+    - _HighlightBlurTop: 0.06
+    - _HighlightBottom: 0.8
+    - _HighlightOpacity: 30
+    - _HighlightTop: 2
     - _Opacity: 0.03
     - _QueueControl: 0
     - _QueueOffset: 0

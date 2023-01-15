@@ -72,7 +72,7 @@ public class test_HealthbarScript : MonoBehaviour
             );
             // trailEffectTimer = Mathf.Sin(Time.deltaTime * 100.0f);
             Debug.Log(trailEffectTimer);
-            trailEffectTimer -= Time.deltaTime * 10.0f;
+            trailEffectTimer -= Time.deltaTime * 20.0f;
         }
     }
 

@@ -57,7 +57,6 @@ public class test_HookSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Gottem");
         var enemy = other.GetComponent<test_Target>();
         if (!hasCollided && enemy != null)
         {

@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float speed = _agent.velocity.sqrMagnitude / _agent.speed;
-        // _animator.SetFloat("Speed", speed, _animationSmoothTime, Time.deltaTime);
+        _animator.SetFloat("Speed", speed, _animationSmoothTime, Time.deltaTime);
     }
 
     protected Vector3 GetCursorPosition()

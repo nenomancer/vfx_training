@@ -85,18 +85,17 @@ public class Unit : MonoBehaviour, IDamagable
     {
         Vector3 direction = targetPosition - transform.position;
         float distance = direction.magnitude;
-        UnityEngine.Debug.Log("DISTANCE: " + distance);
         Vector3 targetDirection = new Vector3(direction.x - stoppingDistance, direction.y, direction.z - stoppingDistance);
+
         agent.SetDestination(targetDirection);
         agent.stoppingDistance = stoppingDistance;
+        
         float targetDistance = direction.magnitude - stoppingDistance;
         while (direction.magnitude > targetDistance)
         {
             direction = targetPosition - transform.position;
-            UnityEngine.Debug.Log("Moving: " + direction.magnitude);
             yield return null;
         }
-        UnityEngine.Debug.Log("Stopped");
         yield break;
     }
 

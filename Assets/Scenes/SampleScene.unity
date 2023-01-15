@@ -1446,8 +1446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5151615c5b5372641be0277d5cf0f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingHealth: 50
-  _startingMoveSpeed: 0
   _rotateSpeed: 0
   health: 0
   moveSpeed: 0
@@ -2486,7 +2484,7 @@ PrefabInstance:
     - target: {fileID: 680386112819420814, guid: 722b23723bfdff2459d0d77f81159207,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 680386112819420815, guid: 722b23723bfdff2459d0d77f81159207,
         type: 3}

@@ -21,14 +21,22 @@ public class test_HealthScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            health -= damage;
-            if (health < 0)
-            {
-                health = 0;
-            }
-            OnHealthChange?.Invoke();
-        }
+        // if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     health -= damage;
+        //     if (health < 0)
+        //     {
+        //         health = 0;
+        //     }
+        //     OnHealthChange?.Invoke();
+
+        // }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health = Mathf.Max(0, health - damage);
+        OnHealthChange?.Invoke();
+
     }
 }
