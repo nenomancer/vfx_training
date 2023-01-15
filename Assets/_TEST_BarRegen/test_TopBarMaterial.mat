@@ -52,7 +52,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _Bottom: 1.02
+    - _Bottom: 0.63
     - _CastShadows: 0
     - _Cull: 0
     - _DstBlend: 0
@@ -63,12 +63,12 @@ Material:
     - _HighlightBottom: 0.71
     - _HighlightOpacity: 0.06
     - _HighlightTop: 1.45
-    - _Opacity: 0.3
+    - _Opacity: 0.03
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 1
     - _Surface: 0
-    - _Top: 1
+    - _Top: 1.7
     - _TrailEffectTimer: 0
     - _TrailHealth: 1309
     - _ZTest: 4
@@ -76,7 +76,7 @@ Material:
     - _ZWriteControl: 1
     m_Colors:
     - _HealthbarPrimaryColor: {r: 0.47450978, g: 0.9058824, b: 0.28627446, a: 1}
-    - _HealthbarSecondaryColor: {r: 0.12941176, g: 0.20784307, b: 0.18431365, a: 0}
-    - _TrailAccentColor: {r: 1, g: 0.0509433, b: 0.0509433, a: 0}
+    - _HealthbarSecondaryColor: {r: 0.05510858, g: 0.064248785, b: 0.0754717, a: 0}
+    - _TrailAccentColor: {r: 0.5754717, g: 0, b: 0.010506193, a: 0}
     - _TrailBaseColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
