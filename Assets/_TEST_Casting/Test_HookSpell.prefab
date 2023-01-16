@@ -50,10 +50,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagsToCheck:
   - Enemy
-  speed: 5
-  returnSpeed: 10
+  speed: 20
+  returnSpeed: 7
   range: 30
   stopRange: 2
+  hitDamage: 240
+  dragDamage: 10
   caster: {fileID: 0}
   collidedWith: {fileID: 0}
 --- !u!54 &7701408500239681759

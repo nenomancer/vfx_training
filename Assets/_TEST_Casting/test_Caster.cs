@@ -50,12 +50,12 @@ public class test_Caster : MonoBehaviour
             }
 
             Rotate(hit.point);
-            CastSpell(hit.collider.transform);
+            CastSpell();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            var firstPulse = Instantiate(_spell04, transform.position, transform.rotation);
+            var firstPulse = Instantiate(_spell02, transform.position, transform.rotation);
             Destroy(firstPulse, 1.0f);
         }
         // Timer();
@@ -68,12 +68,10 @@ public class test_Caster : MonoBehaviour
 
         while (timerIsOn)
         {
-            Debug.Log("Duration: " + (int)duration);
+            // Debug.Log("Duration: " + (int)duration);
             if (duration > 0)
             {
                 duration -= Time.deltaTime;
-                Debug.Log($"total: {totalDuration}, cycle: {cycleDuration}");
-                // Debug.Log("Cycle Duration: " + (int)cycleDuration);
 
                 if (cycleDuration > 0)
                 {

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: test_TopBarMaterial
+  m_Name: test_HealthBarMaterial
   m_Shader: {fileID: -6465566751694194690, guid: d33a0c3d419434c46954e1deba6c2f76,
     type: 3}
   m_ValidKeywords: []
@@ -56,9 +56,14 @@ Material:
     - _CastShadows: 0
     - _Cull: 0
     - _DstBlend: 0
+    - _HealthGroupBlur: 5
+    - _HealthGroupWidth: 85
     - _HealthSegmentAmount: 250
-    - _HealthSegmentsPerGroup: 4
+    - _HealthSegmentBlur: 10
+    - _HealthSegmentWidth: 80
+    - _HealthSegmentsPerGroup: 2
     - _HealthbarCurrentHealth: 947
+    - _HealthbarEdgeBlur: 0.05
     - _HealthbarMaxHealth: 1852
     - _HighlightBlurBottom: 0.41
     - _HighlightBlurTop: 0.06
@@ -72,6 +77,7 @@ Material:
     - _Surface: 0
     - _Top: 1.7
     - _TrailEffectTimer: 0
+    - _TrailEnable: 1
     - _TrailHealth: 1309
     - _ZTest: 4
     - _ZWrite: 1

@@ -7,9 +7,10 @@ using System;
 public class test_HookSpell : MonoBehaviour
 {
     [SerializeField] string[] tagsToCheck;
-    [SerializeField] float speed, returnSpeed, range, stopRange;
+    [SerializeField] float speed, returnSpeed, range, stopRange, hitDamage, dragDamage;
 
-    [HideInInspector] public Transform caster, collidedWith;
+    [HideInInspector] public Transform caster;
+    [HideInInspector] public test_HealthScript collidedWith;
     private LineRenderer line;
     private bool hasCollided;
     // Start is called before the first frame update
@@ -57,22 +58,23 @@ public class test_HookSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var enemy = other.GetComponent<test_Target>();
+        Debug.Log("GOTTEM");
+        var enemy = other.GetComponent<test_HealthScript>();
         if (!hasCollided && enemy != null)
         {
-            Destroy(enemy.gameObject);
-            Collision(other.transform);
+            enemy.TakeDamage(hitDamage);
+            Collision(enemy);
         }
     }
 
-    private void Collision(Transform col)
+    private void Collision(test_HealthScript col)
     {
         speed = returnSpeed;
         hasCollided = true;
 
         if (col)
         {
-            transform.position = col.position;
+            transform.position = col.transform.position;
             collidedWith = col;
         }
     }
