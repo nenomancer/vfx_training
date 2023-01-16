@@ -7,13 +7,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Unit : MonoBehaviour, IDamagable
 {
-    public event Action OnDeath;
+    public static event Action OnDeath;
+    public static event Action OnHealthChange;
 
     [SerializeField] private float _rotateSpeed;
     private float _rotateVelocity;
 
+    [SerializeField] protected float maxHealth;
+    public float MaxHealth => maxHealth;
     [SerializeField]
     protected float health;
+    public float Health => health;
     [SerializeField]
     protected float moveSpeed;
     protected bool isDead;
@@ -27,6 +31,8 @@ public class Unit : MonoBehaviour, IDamagable
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.acceleration = 100.0f;
+
+        health = maxHealth;
     }
 
 
@@ -89,7 +95,7 @@ public class Unit : MonoBehaviour, IDamagable
 
         agent.SetDestination(targetDirection);
         agent.stoppingDistance = stoppingDistance;
-        
+
         float targetDistance = direction.magnitude - stoppingDistance;
         while (direction.magnitude > targetDistance)
         {
@@ -117,6 +123,7 @@ public class Unit : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         health -= damage;
+        OnHealthChange();
         if (health <= 0 && !isDead) Die();
     }
 

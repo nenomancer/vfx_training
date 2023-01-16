@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: test_HealthBarMaterial
+  m_Name: UnitHealthBar
   m_Shader: {fileID: -6465566751694194690, guid: d33a0c3d419434c46954e1deba6c2f76,
     type: 3}
   m_ValidKeywords: []

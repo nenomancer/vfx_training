@@ -10,7 +10,7 @@ public class test_HookSpell : MonoBehaviour
     [SerializeField] float speed, returnSpeed, range, stopRange, hitDamage, dragDamage;
 
     [HideInInspector] public Transform caster;
-    [HideInInspector] public test_HealthScript collidedWith;
+    [HideInInspector] public Unit collidedWith;
     private LineRenderer line;
     private bool hasCollided;
     // Start is called before the first frame update
@@ -49,7 +49,15 @@ public class test_HookSpell : MonoBehaviour
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
             if (collidedWith)
-                collidedWith.transform.position = transform.position;
+            {
+                Vector3 targetPosition = new Vector3(
+                    transform.position.x, 
+                    collidedWith.transform.position.y, 
+                    transform.position.z);
+
+                collidedWith.transform.position = targetPosition;
+
+            }
         }
         else Destroy(gameObject);
 
@@ -59,7 +67,7 @@ public class test_HookSpell : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("GOTTEM");
-        var enemy = other.GetComponent<test_HealthScript>();
+        var enemy = other.GetComponent<Unit>();
         if (!hasCollided && enemy != null)
         {
             enemy.TakeDamage(hitDamage);
@@ -67,14 +75,19 @@ public class test_HookSpell : MonoBehaviour
         }
     }
 
-    private void Collision(test_HealthScript col)
+    private void Collision(Unit col)
     {
         speed = returnSpeed;
         hasCollided = true;
 
         if (col)
         {
-            transform.position = col.transform.position;
+            Vector3 targetPosition = new Vector3(
+                col.transform.position.x, 
+                transform.position.y, 
+                col.transform.position.z);
+                
+            transform.position = targetPosition;
             collidedWith = col;
         }
     }
