@@ -109,19 +109,19 @@ public class test_Caster : MonoBehaviour
         }
     }
 
-    private void Rotate(Vector3 hit)
+    public void Rotate(Vector3 hit)
     {
         Vector3 target = new Vector3(hit.x, transform.position.y, hit.z);
         transform.LookAt(target);
     }
 
-    private void CastSpell()
+    public void CastSpell()
     {
         var hook = Instantiate(_spell02, _castPoint.position, _castPoint.rotation);
         hook.GetComponent<test_HookSpell>().caster = transform;
     }
 
-    private void CastSpell(Transform target)
+    public void CastSpell(Transform target)
     {
         var chainFrost = Instantiate(_spell03, _castPoint.position, _castPoint.rotation);
         chainFrost.GetComponent<test_ChainFrost>().target = target;

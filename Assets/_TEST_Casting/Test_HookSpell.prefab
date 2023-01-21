@@ -55,7 +55,8 @@ MonoBehaviour:
   range: 30
   stopRange: 2
   hitDamage: 240
-  dragDamage: 10
+  dragDamage: 80
+  dragDamageTimer: 0
   caster: {fileID: 0}
   collidedWith: {fileID: 0}
 --- !u!54 &7701408500239681759

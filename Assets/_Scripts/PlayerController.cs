@@ -29,43 +29,38 @@ public class PlayerController : MonoBehaviour
         _cam = Camera.main;
     }
 
-    void Update()
+    async void Update()
     {
 
+        // foreach (Caster.PlayerAbility ability in _caster.Abilities)
+        // {
+        //     if (Input.GetKeyDown(ability._shortcutKey))
+        //     {
+        //         _caster.SelectAbility(ability._ability);
+        //     }
+        // }
 
-        foreach (Spell spell in _caster.Spells)
+        if (Input.GetMouseButtonDown(1))
         {
-            if (Input.GetKey(spell.ShortcutKey))
-            {
-                _caster.ActivateSpell(spell);
-            }
+            _cursorPosition = GetCursorPosition();
+
+            await _caster.Rotate(_cursorPosition);
+            _caster.CastSpell();
+            // _cursorPosition = GetCursorPosition();
+            // await _caster.Rotate(_cursorPosition);
+            // _caster.Move(_cursorPosition);
+
+            // _caster.DeselectAbility();
         }
 
-        foreach (Caster.PlayerAbility ability in _caster.Abilities)
-        {
-            if (Input.GetKeyDown(ability._shortcutKey))
-            {
-                _caster.SelectAbility(ability._ability);
-            }
-        }
-
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(0))
         {
             _cursorPosition = GetCursorPosition();
             _caster.Rotate(_cursorPosition);
             _caster.Move(_cursorPosition);
-
-            _caster.DeselectAbility();
-        }
-
-        if (Input.GetMouseButtonDown(0) && _caster.SpellIsActive)
-        {
-            _cursorPosition = GetCursorPosition();
-            _caster.StopMovement();
-            _caster.Rotate(_cursorPosition);
-            _caster.HandleAbility(_cursorPosition);
-            // StartCoroutine(_caster.RotateTo(_cursorPosition));
-            _caster.DeselectAbility();
+            Debug.Log("NOW WE CAN MOF");
+            // _caster.CastSpell();
+            // _caster.DeselectAbility();
         }
 
         float speed = _agent.velocity.sqrMagnitude / _agent.speed;

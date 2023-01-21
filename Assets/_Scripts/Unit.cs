@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,12 +38,35 @@ public class Unit : MonoBehaviour, IDamagable
 
 
     #region Rotation
-    public void Rotate(Vector3 targetPosition)
+    public async Task Rotate(Vector3 targetPosition)
     {
-        if (_rotationCoroutine != null)
-            StopCoroutine(_rotationCoroutine);
+        // float timer = 5;
 
-        _rotationCoroutine = StartCoroutine(HandleRotation(targetPosition));
+        // while (timer > 0) {
+        //     timer -= Time.deltaTime;
+
+        //     UnityEngine.Debug.Log(timer);
+        //     await Task.Yield();
+        // }
+        agent.SetDestination(transform.position);
+
+         Quaternion lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
+        float rotationY = transform.eulerAngles.y;
+
+        while (Mathf.Abs(rotationY - lookRotation.eulerAngles.y) > 1f)
+        {
+            rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+             lookRotation.eulerAngles.y,
+             ref _rotateVelocity,
+             _rotateSpeed * (Time.deltaTime * 5));
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+
+            await Task.Yield();
+        }
+        // if (_rotationCoroutine != null)
+        //     StopCoroutine(_rotationCoroutine);
+
+        // _rotationCoroutine = StartCoroutine(HandleRotation(targetPosition));
     }
 
     public IEnumerator HandleRotation(Vector3 targetPosition)
@@ -66,9 +90,17 @@ public class Unit : MonoBehaviour, IDamagable
     #endregion 
 
     #region Movement
-    public void Move(Vector3 targetPosition)
+    public async Task Move(Vector3 targetPosition)
     {
-        StartCoroutine(HandleMovement(targetPosition));
+        // StartCoroutine(HandleMovement(targetPosition));
+        agent.SetDestination(targetPosition);
+
+        float targetDistance = (targetPosition - transform.position).magnitude;
+        while (transform.position != agent.destination)
+        {
+            await Task.Yield();
+        }
+
     }
 
     public void Move(Vector3 targetPosition, float stoppingDistance)
@@ -123,7 +155,7 @@ public class Unit : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         health -= damage;
-        OnHealthChange();
+        OnHealthChange?.Invoke();
         if (health <= 0 && !isDead) Die();
     }
 

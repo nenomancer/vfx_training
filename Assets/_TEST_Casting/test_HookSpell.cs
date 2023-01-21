@@ -7,23 +7,23 @@ using System;
 public class test_HookSpell : MonoBehaviour
 {
     [SerializeField] string[] tagsToCheck;
-    [SerializeField] float speed, returnSpeed, range, stopRange, hitDamage, dragDamage;
+    [SerializeField] float speed, returnSpeed, range, stopRange, hitDamage, dragDamage, dragDamageTimer;
 
     [HideInInspector] public Transform caster;
     [HideInInspector] public Unit collidedWith;
     private LineRenderer line;
     private bool hasCollided;
-    // Start is called before the first frame update
     void Start()
     {
         line = transform.Find("Line").GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (caster)
         {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
             line.SetPosition(0, caster.position);
             line.SetPosition(1, transform.position);
 
@@ -46,16 +46,24 @@ public class test_HookSpell : MonoBehaviour
                 }
             }
 
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
             if (collidedWith)
             {
                 Vector3 targetPosition = new Vector3(
-                    transform.position.x, 
-                    collidedWith.transform.position.y, 
+                    transform.position.x,
+                    collidedWith.transform.position.y,
                     transform.position.z);
 
                 collidedWith.transform.position = targetPosition;
+                if (dragDamageTimer > 0)
+                {
+                    dragDamageTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    collidedWith.TakeDamage(dragDamage);
+                    dragDamageTimer = 1f;
+                }
 
             }
         }
@@ -66,7 +74,6 @@ public class test_HookSpell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("GOTTEM");
         var enemy = other.GetComponent<Unit>();
         if (!hasCollided && enemy != null)
         {
@@ -79,14 +86,15 @@ public class test_HookSpell : MonoBehaviour
     {
         speed = returnSpeed;
         hasCollided = true;
+        dragDamageTimer = 1f;
 
         if (col)
         {
             Vector3 targetPosition = new Vector3(
-                col.transform.position.x, 
-                transform.position.y, 
+                col.transform.position.x,
+                transform.position.y,
                 col.transform.position.z);
-                
+
             transform.position = targetPosition;
             collidedWith = col;
         }

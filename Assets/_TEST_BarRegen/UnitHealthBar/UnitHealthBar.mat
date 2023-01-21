@@ -77,7 +77,7 @@ Material:
     - _Surface: 0
     - _Top: 1.7
     - _TrailEffectTimer: 0
-    - _TrailEnable: 1
+    - _TrailEnable: 0
     - _TrailHealth: 1309
     - _ZTest: 4
     - _ZWrite: 1

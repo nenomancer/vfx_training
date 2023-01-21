@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     void OnEnable()
     {
-        Caster.OnCooldownUpdate += AbilityCooldown;
+        // Caster.OnCooldownUpdate += AbilityCooldown;
     }
 
     private void AbilityCooldown(float fillAmount)

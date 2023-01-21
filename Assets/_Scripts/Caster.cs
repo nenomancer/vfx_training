@@ -1,162 +1,113 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Caster : Unit
 {
-    [SerializeField] private Transform _castPoint;
-    public Transform CastPoint => _castPoint;
+    [SerializeField]
+    Transform _castPoint;
 
-    [SerializeField] private Spell[] _spells;
-    public Spell[] Spells => _spells;
+    [SerializeField] GameObject _spell01;
+    [SerializeField] GameObject _spell02;
+    [SerializeField] GameObject _spell03;
+    [SerializeField] GameObject _spell04;
 
-    [Serializable]
-    public class PlayerAbility
+    [Header("Timer Shit")]
+    [SerializeField] int totalPoints;
+    [SerializeField] float totalDuration;
+    float totalDurationTimer;
+
+    [SerializeField] float cycleDuration;
+    float cycleDurationTimer;
+
+    [SerializeField] float tickDuration;
+    float tickDurationTimer;
+
+    [SerializeField]
+    bool isTimerOn = true;
+    async void Start()
     {
-        public Ranged _ability;
-        public KeyCode _shortcutKey;
+        totalDurationTimer = totalDuration;
+        cycleDurationTimer = cycleDuration;
+        tickDurationTimer = tickDuration;
+        // StartCoroutine(TimerCoroutine(10.0f));
+
+        // await Timer();
+        Debug.Log("FINSIHED IN " + Time.time);
+
     }
 
-    [SerializeField] GameObject _inkSwell;
-    [SerializeField] GameObject _healingWave;
-
-    [SerializeField] private PlayerAbility[] _abilities;
-    public PlayerAbility[] Abilities => _abilities;
-
-    private Spell _currentSpell;
-
-
-    private Ranged _currentAbility;
-    public Ranged CurrentAbility => _currentAbility;
-
-    private GameObject _currentAbilityGO;
-    private CapsuleCollider _abilityRangeCollider;
-
-    private Coroutine _castCoroutine;
-
-    private bool _spellIsActive = false;
-    public bool SpellIsActive
+    private async Task Timer()
     {
-        get
+        float duration = 5.0f;
+        while (duration > 0)
         {
-            return _spellIsActive;
+            duration -= Time.deltaTime;
+            await Task.Yield();
+            Debug.Log("duration: " + duration);
         }
-        set
+
+    }
+
+
+    private IEnumerator TimerCoroutine(float duration)
+    {
+        bool timerIsOn = true;
+        float tempCycleDuration = cycleDuration;
+
+        while (timerIsOn)
         {
-            _spellIsActive = value;
+            // Debug.Log("Duration: " + (int)duration);
+            if (duration > 0)
+            {
+                duration -= Time.deltaTime;
+
+                if (cycleDuration > 0)
+                {
+                    cycleDuration -= Time.deltaTime;
+                }
+                else
+                {
+                    cycleDuration = tempCycleDuration;
+                }
+            }
+            else
+            {
+                timerIsOn = false;
+            }
+            yield return null;
         }
-    }
-
-    public static event Action<float> OnCooldownUpdate;
-
-    private void Start()
-    {
-        foreach (Spell spell in _spells)
-            spell.SetIsOnCooldown(false);
-
-
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            var ink = Instantiate(_inkSwell, transform.position, transform.rotation, transform);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit _hit;
-            Physics.Raycast(_ray, out _hit);
-
-            var wave = Instantiate(_healingWave, _hit.point, Quaternion.identity);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (_currentAbility != null)
-        {
-            Gizmos.color = new Color(.4f, .7f, .2f, .1f);
-            Gizmos.DrawSphere(transform.position, _currentAbility.BaseRange);
-        }
-    }
-
-    public void ActivateSpell(Spell spell)
-    {
-        _currentSpell = spell;
-        if (_currentSpell.IsOnCooldown) return;
-        else _spellIsActive = true;
-    }
-
-    public void SelectAbility(Ranged ability)
-    {
-        // send a message that an ability has been selected, sending the ability index
-        _currentAbility = ability;
-        Debug.Log("Cyrrebt avukuty: " + _currentAbility);
-        if (_currentAbility.IsOnCooldown) return;
-        else _spellIsActive = true;
-    }
-
-    public void DeselectAbility()
-    {
-        _spellIsActive = false;
-        _currentAbility = null;
-    }
-
-    public void DeactivateSpell()
-    {
-        _spellIsActive = false;
-        _currentSpell = null;
-    }
-
-    public void HandleAbility(Vector3 cursorPosition)
-    {
-        Move(cursorPosition, _currentAbility.BaseRange);
-        if (_castCoroutine != null)
-            StopCoroutine(_castCoroutine);
-        _castCoroutine = StartCoroutine(CastAbility(cursorPosition));
-    }
-
-    public IEnumerator CastAbility(Vector3 cursorPosition)
-    {
-
-        yield return HandleMovement(cursorPosition, _currentAbility.BaseRange);
-        _currentAbility.UseAbility(_castPoint, cursorPosition);
-        Debug.Log("SHOTT");
-
         yield break;
     }
+
+    // private void Timer()
+    // {
+    //     if (totalDurationTimer > 0 && isTimerOn)
+    //     {
+    //         Debug.Log("Total Duration: " + (int)totalDurationTimer);
+    //         totalDurationTimer -= Time.deltaTime;
+
+    //     }
+    //     else
+    //     {
+    //         isTimerOn = false;
+    //         totalDuration--;
+    //         Debug.Log("TIMER STOPPED!");
+    //     }
+    // }
 
     public void CastSpell()
     {
-        if (!_spellIsActive) return;
-        // check spell type with a for loop
-
-
-        Instantiate(_currentSpell.VFXEffect, _castPoint.position, _castPoint.rotation);
-        _spellIsActive = false;
-
-        _currentSpell.SetIsOnCooldown(true);
-        StartCoroutine(SpellCooldown(_currentSpell));
+        var hook = Instantiate(_spell01, _castPoint.position, _castPoint.rotation);
+        hook.GetComponent<test_HookSpell>().caster = _castPoint;
     }
 
-    private IEnumerator SpellCooldown(Spell spell)
+    private void CastSpell(Transform target)
     {
-        Debug.Log($"Starting cooldown for {spell.Name}");
-        float cooldown = 0.0f;
-
-        while (cooldown <= spell.Cooldown)
-        {
-            cooldown += Time.deltaTime;
-            OnCooldownUpdate?.Invoke(cooldown / spell.Cooldown);
-
-            yield return null;
-        }
-
-        Debug.Log($"Cooldown for {spell.Name} ended");
-        spell.SetIsOnCooldown(false);
-
-        yield break;
+        var chainFrost = Instantiate(_spell03, _castPoint.position, _castPoint.rotation);
+        chainFrost.GetComponent<test_ChainFrost>().target = target;
     }
+
 }
