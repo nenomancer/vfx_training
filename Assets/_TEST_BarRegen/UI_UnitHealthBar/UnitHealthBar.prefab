@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillRate: 5
-  fillDelay: 0.25
+  fillDelay: 0.2
   trailEffectTimer: 0

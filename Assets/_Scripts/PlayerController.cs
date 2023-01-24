@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour
         {
             _cursorPosition = GetCursorPosition();
             _caster.Rotate(_cursorPosition);
+            // transform.LookAt(_cursorPosition);
             _caster.Move(_cursorPosition);
-            Debug.Log("NOW WE CAN MOF");
             // _caster.CastSpell();
             // _caster.DeselectAbility();
         }

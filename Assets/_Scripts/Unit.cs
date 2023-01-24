@@ -14,6 +14,10 @@ public class Unit : MonoBehaviour, IDamagable
     [SerializeField] private float _rotateSpeed;
     private float _rotateVelocity;
 
+    [HideInInspector]
+    public bool enableMovement = true;
+
+
     [SerializeField] protected float maxHealth;
     public float MaxHealth => maxHealth;
     [SerializeField]
@@ -24,8 +28,9 @@ public class Unit : MonoBehaviour, IDamagable
     protected bool isDead;
     protected NavMeshAgent agent;
 
-    private Coroutine _rotationCoroutine;
-    private Coroutine _movementCoroutine;
+
+    private ParticleSystem _bloodSquirt;
+
     // Maybe make some array of states/effects for the unit, for example burn, slow, poison, etc...
     protected virtual void Awake()
     {
@@ -34,57 +39,34 @@ public class Unit : MonoBehaviour, IDamagable
         agent.acceleration = 100.0f;
 
         health = maxHealth;
+        // _bloodSquirt = transform.Find("BloodSquirt").GetComponent<ParticleSystem>();
+
     }
 
+    private void Start()
+    {
+        if (_bloodSquirt != null)
+            _bloodSquirt.Stop();
+    }
 
     #region Rotation
     public async Task Rotate(Vector3 targetPosition)
     {
-        // float timer = 5;
-
-        // while (timer > 0) {
-        //     timer -= Time.deltaTime;
-
-        //     UnityEngine.Debug.Log(timer);
-        //     await Task.Yield();
-        // }
+        if (!enableMovement) return;
         agent.SetDestination(transform.position);
 
-         Quaternion lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
+        Quaternion lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
         float rotationY = transform.eulerAngles.y;
-
-        while (Mathf.Abs(rotationY - lookRotation.eulerAngles.y) > 1f)
+        while (Mathf.Abs(rotationY - lookRotation.eulerAngles.y) > 2f)
         {
             rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
              lookRotation.eulerAngles.y,
              ref _rotateVelocity,
-             _rotateSpeed * (Time.deltaTime * 5));
+             _rotateSpeed * Time.deltaTime);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
 
             await Task.Yield();
         }
-        // if (_rotationCoroutine != null)
-        //     StopCoroutine(_rotationCoroutine);
-
-        // _rotationCoroutine = StartCoroutine(HandleRotation(targetPosition));
-    }
-
-    public IEnumerator HandleRotation(Vector3 targetPosition)
-    {
-        Quaternion lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
-        float rotationY = transform.eulerAngles.y;
-
-        while (Mathf.Abs(rotationY - lookRotation.eulerAngles.y) > 0.1f)
-        {
-            rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-             lookRotation.eulerAngles.y,
-             ref _rotateVelocity,
-             _rotateSpeed * (Time.deltaTime * 5));
-            transform.eulerAngles = new Vector3(0, rotationY, 0);
-
-            yield return null;
-        }
-        yield break;
     }
 
     #endregion 
@@ -92,6 +74,7 @@ public class Unit : MonoBehaviour, IDamagable
     #region Movement
     public async Task Move(Vector3 targetPosition)
     {
+        if (!enableMovement) return;
         // StartCoroutine(HandleMovement(targetPosition));
         agent.SetDestination(targetPosition);
 
@@ -156,6 +139,10 @@ public class Unit : MonoBehaviour, IDamagable
     {
         health -= damage;
         OnHealthChange?.Invoke();
+        if (_bloodSquirt != null)
+        {
+            _bloodSquirt.Play();
+        }
         if (health <= 0 && !isDead) Die();
     }
 

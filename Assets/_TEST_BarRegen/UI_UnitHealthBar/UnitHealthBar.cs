@@ -31,7 +31,6 @@ public class UnitHealthBar : MonoBehaviour
     {
         _cam = Camera.main;
         unit = GetComponentInParent<Unit>();
-        Debug.Log(unit.MaxHealth);
         material = GetComponentInChildren<Renderer>().material;
 
         material.SetFloat("_HealthbarMaxHealth", unit.MaxHealth);
@@ -71,7 +70,6 @@ public class UnitHealthBar : MonoBehaviour
                     Time.deltaTime * (fillRate * 3)
                 )
             );
-            // trailEffectTimer = Mathf.Sin(Time.deltaTime * 100.0f);
             trailEffectTimer -= Time.deltaTime * 20.0f;
         }
     }

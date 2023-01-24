@@ -52,12 +52,13 @@ MonoBehaviour:
   - Enemy
   speed: 20
   returnSpeed: 7
-  range: 30
+  range: 20
   stopRange: 2
   hitDamage: 240
   dragDamage: 80
   dragDamageTimer: 0
   caster: {fileID: 0}
+  castPoint: {fileID: 0}
   collidedWith: {fileID: 0}
 --- !u!54 &7701408500239681759
 Rigidbody:

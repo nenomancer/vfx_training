@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.AI;
 
 public class test_HookSpell : MonoBehaviour
 {
     [SerializeField] string[] tagsToCheck;
     [SerializeField] float speed, returnSpeed, range, stopRange, hitDamage, dragDamage, dragDamageTimer;
 
-    [HideInInspector] public Transform caster;
+    [HideInInspector] public Caster caster;
+    [HideInInspector] public Transform castPoint;
     [HideInInspector] public Unit collidedWith;
     private LineRenderer line;
     private bool hasCollided;
@@ -24,14 +26,14 @@ public class test_HookSpell : MonoBehaviour
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-            line.SetPosition(0, caster.position);
+            line.SetPosition(0, castPoint.position);
             line.SetPosition(1, transform.position);
 
             if (hasCollided)
             {
-                transform.LookAt(caster);
+                transform.LookAt(castPoint);
 
-                var dist = Vector3.Distance(transform.position, caster.position);
+                var dist = Vector3.Distance(transform.position, castPoint.position);
                 if (dist < stopRange)
                 {
                     Destroy(gameObject);
@@ -39,9 +41,11 @@ public class test_HookSpell : MonoBehaviour
             }
             else
             {
-                var dist = Vector3.Distance(transform.position, caster.position);
+                caster.enableMovement = false;
+                var dist = Vector3.Distance(transform.position, castPoint.position);
                 if (dist > range)
                 {
+                    caster.enableMovement = true;
                     Collision(null);
                 }
             }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test_Caster : MonoBehaviour
+public class test_Caster : Unit
 {
     [SerializeField]
     Transform _castPoint;
@@ -118,7 +118,9 @@ public class test_Caster : MonoBehaviour
     public void CastSpell()
     {
         var hook = Instantiate(_spell02, _castPoint.position, _castPoint.rotation);
-        hook.GetComponent<test_HookSpell>().caster = transform;
+        // hook.GetComponent<test_HookSpell>().caster = this;
+
+
     }
 
     public void CastSpell(Transform target)

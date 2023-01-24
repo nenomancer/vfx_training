@@ -16,6 +16,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private float _patrolRadius = 3.0f;
     [SerializeField] private float _patrolInterval = 2.0f;
 
+
     // Start is called before the first frame update
     void Start()
     {
